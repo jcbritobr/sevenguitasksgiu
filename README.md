@@ -33,3 +33,9 @@ go run ./cmd/timer/main.go
 go run ./cmd/crud/main.go
 ```
 ![](thumbs/crud.png)
+
+* Circles
+```
+go run ./cmd/cirgles/main.go
+```
+![](thumbs/circles.png)
