@@ -1,5 +1,5 @@
 # Seven GUI Tasks for GIU library
-This is an implementation os [the 7GUIs tasks](https://eugenkiss.github.io/7guis/) written with [Golang](https://golang.org/) and [GIU](https://github.com/AllenDang/giu) library.
+This is an implementation of [the 7GUIs tasks](https://eugenkiss.github.io/7guis/) written with [Golang](https://golang.org/) and [GIU](https://github.com/AllenDang/giu) library.
 
 * Counter
 ```
