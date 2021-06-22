@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/AllenDang/giu"
+	"github.com/AllenDang/imgui-go"
 )
 
 var (
@@ -19,7 +20,7 @@ var (
 
 const (
 	winHeight = 300
-	winWidth  = 270
+	winWidth  = 500
 )
 
 func onComboChanged() {
@@ -49,13 +50,13 @@ func onBookClick() {
 func loop() {
 	giu.SingleWindow("Booker Flight").Layout(
 		giu.Combo("flight", comboData[selectionData], comboData, &selectionData).OnChange(onComboChanged),
-		giu.DatePicker("start", &start).Size(175).OnChange(onDatePickChanged),
-		giu.Condition(isReturn, giu.Layout{giu.DatePicker("return", &_return).Size(175).OnChange(onDatePickChanged)}, nil),
+		giu.DatePicker("start", &start).Size(325).OnChange(onDatePickChanged),
+		giu.Condition(isReturn, giu.Layout{giu.DatePicker("return", &_return).Size(325).OnChange(onDatePickChanged)}, nil),
 		giu.Condition(
 			errReturnDate,
 			giu.Layout{
 				giu.Style().
-					SetColor(0, color.RGBA{R: 255, G: 0, B: 0, A: 255}).
+					SetColor(imgui.StyleColorText, color.RGBA{R: 255, G: 0, B: 0, A: 255}).
 					To(giu.Label("Return date is lesser than\nstart date!")),
 			},
 			nil,
@@ -66,7 +67,7 @@ func loop() {
 			giu.Button("Ok").OnClick(func() { giu.CloseCurrentPopup() }),
 		),
 		giu.PopupModal("Book##return").Layout(
-			giu.Label(fmt.Sprintf("You have booked a return\nflight for %s to %s", start.String(), _return.String())),
+			giu.Label(fmt.Sprintf("You have booked a return\nflight for %s\nto %s", start.String(), _return.String())),
 			giu.Button("Ok").OnClick(func() { giu.CloseCurrentPopup() }),
 		),
 	)

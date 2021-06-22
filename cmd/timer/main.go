@@ -28,6 +28,7 @@ func refresh() {
 		if count < maxCount {
 			count++
 			progress = (float32(count*100) / float32(maxCount)) / 100
+			giu.Update()
 		}
 		<-ticker.C
 	}

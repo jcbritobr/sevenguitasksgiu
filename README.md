@@ -27,3 +27,9 @@ go run ./cmd/flightbooker/main.go
 go run ./cmd/timer/main.go
 ```
 ![](thumbs/timer.png)
+
+* CRUD
+```
+go run ./cmd/crud/main.go
+```
+![](thumbs/crud.png)
