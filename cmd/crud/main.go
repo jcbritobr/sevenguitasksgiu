@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/AllenDang/giu"
 )
@@ -15,7 +16,8 @@ var (
 	filterPrefix        string
 	inputName           string
 	inputSurname        string
-	dataListItem        []string
+	dataListItemView    []string
+	dataStorage         []string
 	dataListItemCurrent int
 )
 
@@ -23,9 +25,23 @@ func removeIndex(list []string, index int) []string {
 	return append(list[:index], list[index+1:]...)
 }
 
+func onFilterPrefix() {
+	updateView()
+}
+
+func updateView() {
+	dataListItemView = nil
+	for _, v := range dataStorage {
+		if strings.HasPrefix(v, filterPrefix) {
+			dataListItemView = append(dataListItemView, v)
+		}
+	}
+}
+
 func onCreate() {
-	dataListItem = append(dataListItem, fmt.Sprintf("%s, %s", inputSurname, inputName))
+	dataStorage = append(dataStorage, fmt.Sprintf("%s, %s", inputSurname, inputName))
 	clearFields()
+	updateView()
 }
 
 func onListChange(index int) {
@@ -35,20 +51,22 @@ func onListChange(index int) {
 func onUpdate() {
 	onDelete()
 	onCreate()
+	updateView()
 }
 
 func onDelete() {
-	dataListItem = removeIndex(dataListItem, dataListItemCurrent)
+	dataStorage = removeIndex(dataStorage, dataListItemCurrent)
+	updateView()
 }
 
 func loop() {
 	giu.SingleWindow("##Crud").Layout(
 		giu.Row(
 			giu.Label("Filter Prefix"),
-			giu.InputText("##filter-prefix-input", &filterPrefix).Size(-1),
+			giu.InputText("##filter-prefix-input", &filterPrefix).Size(-1).OnChange(onFilterPrefix),
 		),
 		giu.Row(
-			giu.ListBox("##list-item", dataListItem).Size(200, 100).OnChange(onListChange),
+			giu.ListBox("##list-item", dataListItemView).Size(200, 100).OnChange(onListChange),
 			giu.Column(
 				giu.Row(
 					giu.Label("Name   "),
